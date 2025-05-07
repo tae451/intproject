@@ -10,22 +10,49 @@
     
     <script>
         $(document).ready(function () {
-            //Draggable windows
-            $(".window").draggable({ containment: "body", scroll: false, handle:".titlebar" });
+            //Initialize windows and hide
+            $(".window").draggable({ containment: "body", scroll: false, handle:".titlebar" }); //drag function
             $("#page1").load("testpage.html");
+            $(".window").hide();
 
-            //Load dialogue texts
-            const dialogues = ["This is my first", "My second message.", "Really last one"];
+            //debug parameters
+            $(".window").show();
 
-            for (let i = 0; i < dialogues.length; i++) {
-                $("#chatwindow").append("<p>" + dialogues[i] + "</p>")
+            //init dialogue texts and variables
+            let currentDialogue = [""];
+            let currentDialogueResponse = [""];
+            let dialogueProgress = 0;
+
+            const dialogue = {
+                testDialogue: {
+                    lines: ["This is my first", "My second message.", "Really last one", "fourth go forth last"],
+                    responses: [1, 0, 0, 2],
+                },
+                introDialogue: {
+                    lines: [""],
+                    responses: [""]
+                }
+            };
+
+            /*
+            for (let i = 0; i < testDialogue.length; i++) {
+                $("#chatwindow").append("<p>" + testDialogue[i] + "</p>")
+            }
+            */
+
+            //load a dialogue
+            function loadDialogues(dialogueName) {
+                currentDialogue = dialogue[dialogueName].lines;
+                currentDialogueResponse = dialogue[dialogueName].responses;
+                dialogueProgress = 0;
             }
 
+            loadDialogues(testDialogue);
+            console.log(currentDialogue);
+            console.log(currentDialogueResponse);
+
             //Array to keep windows in order of last interacted with
-            let windows = $(".window").toArray();
-            windows.forEach(function(item) {
-                console.log("This is " + $(item).prop('id'));
-            });
+            let windows = $(".window").toArray(); //array objects are stored as raw DOMs
             let windowIndexRange = 50; //z index range for windows starts at
 
             //rearrange windows when clicked
@@ -38,14 +65,49 @@
                 windows = windows.filter(a => a !== interactedWindow);
                 windows.push(interactedWindow);
                 for (let i = 0; i < windows.length; i++) {
-                    console.log(i + " " + $(windows[i]).prop('id'));
+                    //console.log(i + " " + $(windows[i]).prop('id'));
                     $(windows[i]).css("z-index", i + windowIndexRange);
                 }
                 $(".titlebar").removeClass("activetitlebar");
                 $(interactedWindow).find(".titlebar").addClass("activetitlebar");
             }
 
-            //Stages of progress, each has a bit for dialogue or game or whatever
+            //TODO: Stages of progress, each has a bit for dialogue or game or whatever
+
+            //taskbar functionality
+            $(".taskbutton").click(function () {
+                const buttonId = $(this).attr("id"); // id of button (taskbutton)
+                const windowEl = $("#" + buttonId.replace("button", "window"))[0]; //parse buttonId to get corresponding window (raw dom)
+
+                if ($(windowEl).is(":visible")) {
+                // if ($(windowEl).find(".titlebar").hasClass("activetitlebar")) { //if active window minimize
+                    minimizeWindow(windowEl);
+                } else { //or show hidden window
+                    maximizeWindow(windowEl);
+                }
+            });
+
+            //functions for handling open and close windows
+            function minimizeWindow(cWin) {
+                const windowId = $(cWin).attr("id"); // id of window
+                const buttonEl = $("#" + windowId.replace("window", "button"))[0]; //parse window -> button id
+                //hide window and deactivate button
+                $(cWin).hide();
+                $(buttonEl).removeClass("activetaskbutton");
+            }
+            function maximizeWindow(mWin) {
+                const windowId = $(mWin).attr("id"); // id of window
+                const buttonEl = $("#" + windowId.replace("window", "button"))[0]; //parse window -> button id
+
+                $(mWin).show();
+                $(buttonEl).addClass("activetaskbutton");
+                bringToFront(mWin);
+            }
+
+            //closebutton
+            $(".closebutton").on("click", function () {
+                minimizeWindow($(this).closest(".window"));
+            });
         });
     </script>
     <style>
@@ -56,13 +118,16 @@
 
 <body>
     <nav id="taskbar">
-        <a class="taskbutton">Browser</a>
-        <a class="taskbutton">Dyscord</a>
-        <a class="taskbutton">Settings</a>
-        <a class="taskbutton">FileShark</a>
+        <a class="taskbutton" id="browserbutton">Browser</a>
+        <a class="taskbutton" id="chatbutton">Dyscord</a>
+        <a class="taskbutton" id="settingsbutton">Settings</a>
+        <a class="taskbutton" id="filesbutton">FileShark</a>
+        <a class="taskbutton" id="gamebutton">DosBot</a>
     </nav>
     <div class="window" id="browserwindow">
-        <div class="titlebar"></div>
+        <div class="titlebar">
+            <a class="closebutton">X</a>
+        </div>
         <div class="pagecontent" id="page1">
             <p>This is page one</p>
         </div>
@@ -75,13 +140,13 @@
         <div class="titlebar"></div>
         <p>these are settings</p>
     </div>
-    <div class="window debugrandomloc" id="testone">
+    <div class="window" id="fileswindow">
         <div class="titlebar"></div>
-        <p>test for window array</p>
+        <p>this is a file explorer</p>
     </div>
-    <div class="window debugrandomloc" id="testtwo">
+    <div class="window" id="gamewindow">
         <div class="titlebar"></div>
-        <p>test for window array 2</p>
+        <p>this is games 2</p>
     </div>
 </body>
 
