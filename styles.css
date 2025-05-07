@@ -3,6 +3,19 @@ html {
     padding: 0px;
 }
 
+body {
+    margin: 0;
+    min-height: 100vh;
+    background-color: rgb(0, 0, 0);
+    font-family: 'Raleway', 'Verdana', sans-serif;
+}
+
+#desktop {
+    width: 100%;
+    height: 100%;
+    background-color: aqua;
+}
+
 #taskbar {
     position: absolute;
     width: 50vh;
@@ -14,7 +27,8 @@ html {
     transform: translate(-50%, -50%);
     z-index: 10;
 
-    border: 5px solid rgb(0, 0, 0);
+    outline: 5px solid rgb(255, 255, 255);
+    border-radius: 7px;
 
     display: flex;
     justify-content: center;
@@ -24,6 +38,7 @@ html {
     width: 5vh;
     height: 5vh;
     border: 1px solid rgb(165, 154, 170);
+    color: white;
 }
 .taskbutton:hover {
     background-color: rgba(177, 219, 255, 0.534);
@@ -33,19 +48,22 @@ html {
 }
 
 .window {
-    background-color: rgb(255, 255, 255);
-    border: 5px solid rgb(0, 0, 0);
+    background-color: rgb(0, 0, 0);
+    border-radius: 7px;
+    outline: 5px solid rgb(255, 255, 255);
     z-index: 5;
     position: absolute;
+    color: white;
 }
 
 .titlebar {
     top: 0px;
     width: 100%;
-    height: 2vh;
+    height: 2.5vh;
     background-color: rgb(99, 75, 122);
     display: flex;
     justify-content: right;
+    border-bottom: 5px solid rgb(255, 255, 255);
 }
 .activetitlebar {
     background-color: blueviolet;
@@ -55,6 +73,14 @@ html {
     height: 100%;
     aspect-ratio: 1 / 1;
     background-color: rgb(155, 33, 33);
+    border-left: 5px solid rgb(255, 255, 255);
+    background-image: url(/images/cross.png);
+    background-size: contain;
+}
+
+.closebutton img {
+    width: 100%;
+    height: 100%;
 }
 
 .pagecontent {
@@ -65,8 +91,8 @@ html {
 #browserwindow {
     left: 20vw;
     top: 20vh;
-    width: 50vw;
-    height: 30vw;
+    width: 90vh;
+    height: 65vh;
 }
 
 #chatwindow {
@@ -76,21 +102,70 @@ html {
     top: 10vh;
 }
 
+h2 {
+    margin: 0px;
+    padding: 20px 10px 20px 10px;
+}
+
+#chatwindowtest {
+    width: 30vh;
+    height: 50vh;
+    left: 15vw;
+    top: 15vh;
+    display: flex;
+    flex-direction: column;
+}
+
+#chatcontainer {
+    display: flex;
+    flex-direction: column;
+    height: 60%;
+    overflow: scroll;
+}
+
+.chatmsg {
+    width: 60%;
+    padding: 5px;
+    margin: 7px 10px 7px 10px;
+    outline: solid 4px rgb(255, 255, 255);
+    border-radius: 5px;
+    color: black;
+}
+
+.npcline {
+    background-color: beige;
+    align-self: flex-start;
+}
+
+.playerline {
+    background-color: rgb(233, 220, 245);
+    align-self: flex-end;
+}
+
+.responseoption {
+    background-color: rgb(233, 220, 245);
+    padding: 5px;
+    margin: 7px;
+    outline: solid 4px rgb(255, 255, 255);
+    border-radius: 5px;
+    border: none;
+}
+
+#replycontainer {
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    padding: 5px;
+    margin: 10px;
+    outline: solid 4px black;
+    border-radius: 5px;
+    height: auto;
+    flex-grow: 1;
+}
+
 #settingswindow {
     width: 10vh;
     height: 10vh;
     left: 90vw;
     top: 80vh;
-}
-
-body {
-    margin: 0;
-    min-height: 100vh;
-    background-color: aqua;
-}
-
-#desktop {
-    width: 100%;
-    height: 100%;
-    background-color: aqua;
 }
