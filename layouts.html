@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MMCC Project</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            //NAV
+            //Show submenu when hover
+            $('#menu1').mouseenter(function () {
+                $('#miniholder').stop; //stop animation from queueing
+                $('#miniholder').slideDown(77);
+            });
+            //Hide when stop hovering
+            $('#menu1').mouseleave(function () {
+                $('#miniholder').stop;
+                $('#miniholder').slideUp(77);
+            });
+
+            //mbutt hover function
+            function animateButton(selector, fontSize) {
+                $(selector).mouseenter(function () {
+                    $(this).stop().animate({ //stop all prev anims to prevent queueing, then animate
+                        fontSize: fontSize.enter 
+                    }, { 
+                        duration: 80 
+                    });
+                }).mouseleave(function () {
+                    $(this).stop().animate({ 
+                        fontSize: fontSize.leave 
+                    }, { 
+                        duration: 80 
+                    });
+                });
+            }
+
+            animateButton('.mbutt', {enter: "1.5vw", leave: "1.2vw"});
+            animateButton('.minibutt', {enter: "1vw", leave: "0.8vw"});
+
+            //PAGE SPECIFIC
+            
+            //Hide the subtext
+            $('#miniholder').hide();
+
+            //Hide the WORD content (except first one)
+            $('.overimg').hide();
+
+            //Hidesall
+            function resetall() {
+                $('.gallbutt').removeClass("pressthis");
+                $('.overimg').hide();
+            }
+
+            //Buttons mechanism
+            $('#fullbutt').click(function() {
+                resetall();
+                $(this).addClass("pressthis");
+                $('#fullOL').fadeIn(150);
+            });
+            $('#tklbutt').click(function() {
+                resetall();
+                $(this).addClass("pressthis");
+                $('#tklOL').fadeIn(150);
+            });
+            $('#60butt').click(function() {
+                resetall();
+                $(this).addClass("pressthis");
+                $('#60OL').fadeIn(150);
+            });
+            $('#75butt').click(function() {
+                resetall();
+                $(this).addClass("pressthis");
+                $('#75OL').fadeIn(150);
+            });
+            $('#morebutt').click(function() {
+                resetall();
+                $(this).addClass("pressthis");
+                $('#moreOL').fadeIn(150);
+            });
+            //and glow when hovered over
+            $('.gallbutt').mouseenter(function() {
+                $(this).addClass("pressthishover");
+            });
+            $('.gallbutt').mouseleave(function() {
+                $(this).removeClass("pressthishover");
+            });
+        });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+    </style>
+</head>
+<body>
+    <main class="clearfix">
+        <div id="content">
+            <section class="page" id="cpup">
+                <h1>Keyboard Layouts</h1>
+                <figure class="imagecontainer">
+                    <!-- PNG used for transparency support -->
+                    <img src="images/fullsize.png" alt="full size" class="overimg largenate" id="fullOL">
+                    <img src="images/tkl.png" alt="tkl" class="overimg largenate" id="tklOL">
+                    <img src="images/60.png" alt="60%" class="overimg largenate" id="60OL">
+                    <img src="images/75.png" alt="75%" class="overimg largenate" id="75OL">
+                    <img src="images/more.png" alt="more" class="overimg" id="moreOL">
+                    <img src="images/layoutsbg.png" alt="more" class="overbg " id="gallBG">
+                </figure>
+                <br>
+                <div id="buttoncontainer">
+                    <button id="fullbutt" class="gallbutt">Full size</button>
+                    <button id="tklbutt" class="gallbutt">TKL</button>
+                    <button id="60butt" class="gallbutt">60%</button>
+                    <button id="75butt" class="gallbutt">70%</button>
+                    <button id="morebutt" class="gallbutt">+ More!</button>
+                </div>
+                <p>
+                    Above are the most common layouts used in mechanical keyboards.
+                    Often, smaller layouts are more popular with FPS gamers who mainly just need WASD. 
+                    Other types of games, such as MMORPGs, may require more keybinds that necessitate a layout.
+                    A numpad included in full-size layouts can be useful for certain types of productivity.
+                </p>
+                <p>
+                    Using multiple layers, it's possible to preserve functionality even with a smaller layout.
+                    However, learning how to layers can have a learning curve.
+                </p>
+                <p>
+                    In the end, layouts are a matter of preference, so try each one out and decide which one works for you -
+                    there are no limits to what layout you can have with a custom keyboard!
+                    Keep in mind a smaller layout will typically be cheaper as well!
+                </p>
+                <p>
+                    Pictured keyboards: <a href="https://cannonkeys.com/products/vicious40-keyboard" target="_blank">Vicious40</a> 
+                    | <a href="https://keebd.com/products/sofle-v2-1-choc-keyboard-kit" target="_blank">Sofle v2.1</a>
+                </p>
+                <p>
+                    Layout from: <a href="https://keyboard.dmitrijs.lv/" target="_blank">Keyboard Chatter Test</a>
+                </p>
+            </section>
+        </div>
+        <nav>
+            <div id="logobox">
+                <a href="index.html">
+                    <img src="images/aetaxvw.png" alt="logo" id="logoimage">
+                </a>
+            </div>
+            <a href="planning.html" class="mbutt">Planning&nbsp;</a>
+            <a href="layouts.html" class="mbutt">Layouts&nbsp;</a><a class="buttcaret sheen">‹</a>
+            <br>
+            <div id="menu1">
+                <a href="components.html" class="mbutt">Components</a>
+                <div id="miniholder">
+                    <a href="components.html#d1" class="minibutt">Case</a>
+                    <a href="components.html#d2" class="minibutt">Plate</a>
+                    <a href="components.html#d3" class="minibutt">PCB</a>
+                    <a href="components.html#d4" class="minibutt">Switches</a>
+                    <a href="components.html#d5" class="minibutt">Keycap</a>
+                    <a href="components.html#d6" class="minibutt">Accessories</a>
+                </div>
+            </div>
+            <a href="building.html" class="mbutt">Building</a>
+        </nav>
+    </main>
+</body>
+</html>

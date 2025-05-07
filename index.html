@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>MMCC Project</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="jquery-3.7.1.min.js"></script>
+    <script src="jquery-ui.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            $(".window").draggable({ containment: "body", scroll: false, handle:".titlebar" });
+            $("#page1").load("testpage.html");
+        });
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+    </style>
+</head>
+
+<body>
+    <nav id="taskbar">
+        <a>test1</a>
+        <a>test2</a>
+        <a>test3</a>
+    </nav>
+    <div class="window" id="test1">
+        <div class="titlebar"></div>
+        <div class="pagecontent" id="page1">
+            <p>This is page one</p>
+        </div>
+    </div>
+    <div class="window" id="test2">
+        <div class="titlebar"></div>
+        <p>also a test</p>
+    </div>
+</body>
+
+</html>
