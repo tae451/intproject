@@ -1,103 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="utf-8">
-    <title>MMCC Project</title>
-    <link href="testk.css" rel="stylesheet">
-    <script src="jquery-3.7.1.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            //NAV
-            //Show submenu when hover
-            $('#menu1').mouseenter(function () {
-                $('#miniholder').stop; //stop animation from queueing
-                $('#miniholder').slideDown(77);
-            });
-            //Hide when stop hovering
-            $('#menu1').mouseleave(function () {
-                $('#miniholder').stop;
-                $('#miniholder').slideUp(77);
-            });
-
-            //mbutt hover function
-            function animateButton(selector, fontSize) {
-                $(selector).mouseenter(function () {
-                    $(this).stop().animate({ //stop all prev anims to prevent queueing, then animate
-                        fontSize: fontSize.enter 
-                    }, { 
-                        duration: 80 
-                    });
-                }).mouseleave(function () {
-                    $(this).stop().animate({ 
-                        fontSize: fontSize.leave 
-                    }, { 
-                        duration: 80 
-                    });
-                });
-            }
-
-            animateButton('.mbutt', {enter: "1.5vw", leave: "1.2vw"});
-            animateButton('.minibutt', {enter: "1vw", leave: "0.8vw"});
-
-            //Hide the subtext
-            $('#miniholder').hide();
-        });
-    </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+        .post {
+            margin-bottom: 30px;
+            background-color: #1e1e1e;
+            border: 2px solid #555;
+            padding: 15px;
+        }
+
+        .suspect {
+            cursor: grab;
+            background-color: yellow;
+            padding: 5px;
+            display: inline-block;
+        }
     </style>
 </head>
+
 <body>
-    <main class="clearfix">
-        <div id="content">
-            <section class="page" id="cpup">
-                <h1>Your First Keyboard</h1>
-                <h3>
-                    Congratulations on deciding to build your first keyboard!
-                </h3>
-                <p>
-                    Building a custom keyboard can be a fun experience, 
-                    and you get something out if it that you can use every day!
-                </p>
-                <figure class="imagecontainer">
-                    <img src="images/conone.jpeg" alt="keyboard image">
-                </figure>
-                <p>
-                    Pictured keyboard:
-                    <a href="https://www.keebtalk.com/t/gb-conone-65-live-now-now/8124" target="_blank">
-                        Conone 65
-                    </a>
-                </p>
-                <p>
-                    A custom keyboard build can range from around $50 to thousands of dollars. 
-                    It's important to plan out your build first. 
-                    The process of building a custom keyboard can easily take over a year!
-                </p>
-            </section>
-        </div>
-        <nav>
-            <div id="logobox">
-                <a href="index.html">
-                    <img src="images/aetaxvw.png" alt="logo" id="logoimage">
-                </a>
-            </div>
-            <a href="planning.html" class="mbutt">Planning&nbsp;</a><a class="buttcaret sheen">‹</a>
-            <a href="layouts.html" class="mbutt">Layouts&nbsp;</a>
-            <br>
-            <div id="menu1">
-                <a href="components.html" class="mbutt">Components</a>
-                <div id="miniholder">
-                    <a href="components.html#d1" class="minibutt">Case</a>
-                    <a href="components.html#d2" class="minibutt">Plate</a>
-                    <a href="components.html#d3" class="minibutt">PCB</a>
-                    <a href="components.html#d4" class="minibutt">Switches</a>
-                    <a href="components.html#d5" class="minibutt">Keycap</a>
-                    <a href="components.html#d6" class="minibutt">Accessories</a>
-                </div>
-            </div>
-            <a href="building.html" class="mbutt">Building</a>
-        </nav>
-    </main>
+    <h1>LOLZone99 - User Feed</h1>
+    <div class="post">
+        <h2>username: glitterchimp999</h2>
+        <p>"i found this in the deep folders... 'if u laugh, u lose 😂💀'..."</p>
+        <p class="suspect" draggable="true">File: laughing_banana_404.gif</p>
+    </div>
+
+    <div class="post">
+        <h2>username: glitterchimp999</h2>
+        <p>"current mood: bruh.exe has stopped working"</p>
+    </div>
+
+    <div class="post">
+        <h2>username: glitterchimp999</h2>
+        <p>"does anyone else remember meowmix.mp3? or am i hallucinating again??"</p>
+    </div>
 </body>
+
 </html>

@@ -7,165 +7,7 @@
     <link href="styles.css" rel="stylesheet">
     <script src="jquery-3.7.1.min.js"></script>
     <script src="jquery-ui.js"></script>
-    
-    <script>
-        $(document).ready(function () {
-            //Initialize windows and hide
-            $(".window").draggable({ containment: "body", scroll: false, handle:".titlebar" }); //drag function
-            $("#page1").load("testpage.html");
-            $(".window").hide();
-
-            //debug parameter
-            $(".window").show();
-
-            //init dialogue variables
-            let currentDialogue = [];
-            let currentResponses = [];
-            let dialogueBranches = {};
-            let dialogueProgress = 0;
-            let responseDelay = 1000; //1000 milliseconds
-            let dialogueComplete = false; //marker if current dialogue is finished or not
-
-            //dialogue texts object
-            const dialogue = {
-                testDialogue: {
-                    //All dialogue lines
-                    lines: [
-                        "this is first msg",                 // 0
-                        "bad or good?",                      // 1 
-                        "good. very good.",                  // 2
-                        "very bad not good",                 // 3
-                        "enough talking this is just a test" // 4
-                    ],
-                    responses: [
-                        null,
-                        ["good", "bad"],
-                        null,
-                        null,
-                        null
-                    ],
-                    //Assign branches to skip dialogues when reaching a certain message.
-                    //Objects following dialogue options, and numbers for normal messages.
-                    branches: {
-                        1: { "good": 2, "bad": 3 }, //good chosen -> 2, bad -> 3
-                        2: 4,                       //After 2, -> 4
-                        3: 4                        //3 -> 4
-                    }
-                }
-            };
-
-            //load dialogue as current
-            function loadDialogues(dialogueName) {
-                const dlg = dialogue[dialogueName];
-                currentDialogue = dlg.lines;
-                currentResponses = dlg.responses;
-                dialogueBranches = dlg.branches || {}; //optional if it has branches
-                dialogueProgress = 0;
-
-                showNextLine();
-            }
-
-            //Incrementing dialogue
-            function showNextLine() {
-                const line = currentDialogue[dialogueProgress];
-                const response = currentResponses[dialogueProgress];
-
-                $("#chatwindow").append(`<div class="chatmsg npcline">${line}</div>`); //add line to chatwindow
-
-                if (Array.isArray(response)) { //if response exists for the line
-                    //show choices
-                    $("#chatwindow").append(`<div id="replybox"></div>`);
-                    response.forEach(option => {
-                        $("#replybox").append(`<button class="responseoption">${option}</button>`);
-                    });
-
-                    //clicked option
-                    $(".responseoption").click(function () {
-                        const choiceText = $(this).text();
-                        $("#replybox").remove();
-                        $("#chatwindow").append(`<div class="chatmsg playerline">${choiceText}</div>`);
-
-                        //check branch and goto line
-                        dialogueProgress = dialogueBranches[dialogueProgress][choiceText];
-                        setTimeout(showNextLine, responseDelay);
-                    });
-
-                } else {
-                    //if a skip is defined in branches, skip to assigned number
-                    if (typeof dialogueBranches[dialogueProgress] === "number") {
-                        dialogueProgress = dialogueBranches[dialogueProgress];
-                    } else {
-                        dialogueProgress++;
-                    }
-                    //show next line if not at end
-                    if (dialogueProgress < currentDialogue.length) {
-                        setTimeout(showNextLine, responseDelay);
-                    }
-                }
-            }
-
-            //load test
-            loadDialogues("testDialogue");
-
-            //Array to keep windows in order of last interacted with
-            let windows = $(".window").toArray(); //array objects are stored as raw DOMs
-            let windowIndexRange = 50; //z index range for windows starts at
-
-            //rearrange windows when clicked
-            $(".window").mousedown(function () {
-                bringToFront(this);
-            });
-
-            //bring active window to end of array
-            function bringToFront(interactedWindow) {
-                windows = windows.filter(a => a !== interactedWindow);
-                windows.push(interactedWindow);
-                for (let i = 0; i < windows.length; i++) {
-                    //console.log(i + " " + $(windows[i]).prop('id'));
-                    $(windows[i]).css("z-index", i + windowIndexRange);
-                }
-                $(".titlebar").removeClass("activetitlebar");
-                $(interactedWindow).find(".titlebar").addClass("activetitlebar");
-            }
-
-            //TODO: Stages of progress, each has a bit for dialogue or game or whatever
-
-            //taskbar functionality
-            $(".taskbutton").click(function () {
-                const buttonId = $(this).attr("id"); // id of button (taskbutton)
-                const windowEl = $("#" + buttonId.replace("button", "window"))[0]; //parse buttonId to get corresponding window (raw dom)
-
-                if ($(windowEl).is(":visible")) {
-                // if ($(windowEl).find(".titlebar").hasClass("activetitlebar")) { //if active window minimize
-                    minimizeWindow(windowEl);
-                } else { //or show hidden window
-                    maximizeWindow(windowEl);
-                }
-            });
-
-            //functions for handling open and close windows
-            function minimizeWindow(cWin) {
-                const windowId = $(cWin).attr("id"); // id of window
-                const buttonEl = $("#" + windowId.replace("window", "button"))[0]; //parse window -> button id
-                //hide window and deactivate button
-                $(cWin).hide();
-                $(buttonEl).removeClass("activetaskbutton");
-            }
-            function maximizeWindow(mWin) {
-                const windowId = $(mWin).attr("id"); // id of window
-                const buttonEl = $("#" + windowId.replace("window", "button"))[0]; //parse window -> button id
-
-                $(mWin).show();
-                $(buttonEl).addClass("activetaskbutton");
-                bringToFront(mWin);
-            }
-
-            //closebutton
-            $(".closebutton").on("click", function () {
-                minimizeWindow($(this).closest(".window"));
-            });
-        });
-    </script>
+    <script src="main.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
@@ -179,10 +21,11 @@
         <a class="taskbutton" id="settingsbutton">Settings</a>
         <a class="taskbutton" id="filesbutton">FileShark</a>
         <a class="taskbutton" id="gamebutton">DosBot</a>
+        <a class="taskbutton" id="statusbutton">Status</a>
     </nav>
     <div class="window" id="browserwindow">
         <div class="titlebar">
-            <a class="closebutton">X</a>
+            <a class="closebutton"></a>
         </div>
         <div class="pagecontent" id="page1">
             <p>This is page one</p>
@@ -190,25 +33,25 @@
     </div>
     <div class="window" id="chatwindow">
         <div class="titlebar">
-            <a class="closebutton">X</a>
+            <a class="closebutton"></a>
         </div>
         <h2>I prefer Slack</h2>
     </div>
     <div class="window" id="settingswindow">
         <div class="titlebar">
-            <a class="closebutton">X</a>
+            <a class="closebutton"></a>
         </div>
         <p>these are settings</p>
     </div>
     <div class="window" id="fileswindow">
         <div class="titlebar">
-            <a class="closebutton">X</a>
+            <a class="closebutton"></a>
         </div>
         <p>this is a file explorer</p>
     </div>
     <div class="window" id="gamewindow">
         <div class="titlebar">
-            <a class="closebutton">X</a>
+            <a class="closebutton"></a>
         </div>
         <p>this is games 2</p>
     </div>
@@ -233,6 +76,36 @@
         <div id="replycontainer">
             <button class="responseoption">good</button>
             <button class="responseoption">bad</button>
+        </div>
+    </div>
+    <div class="window" id="statuswindow">
+        <div class="titlebar">
+            <a class="closebutton"></a>
+        </div>
+        <div id="sectorstatus">
+            <div class="sectorstatusoverlay">
+                <div class="sectorind div1" value="3"> </div>
+                <div class="sectorind div2" value="7"> </div>
+                <div class="sectorind div3" value="4"> </div>
+                <div class="sectorind div4" value="7"> </div>
+                <div class="sectorind div5" value="12"> </div>
+                <div class="sectorind div6" value="11"> </div>
+                <div class="sectorind div7" value="17"> </div>
+                <div class="sectorind div8" value="17"> </div>
+                <div class="sectorind div9" value="15"> </div>
+                <div class="sectorind div10" value="19"> </div>
+                <div class="sectorind div11" value="8"> </div>
+                <div class="sectorind div12" value="13"> </div>
+                <div class="sectorind div13" value="12"> </div>
+                <div class="sectorind div14" value="20"> </div>
+                <div class="sectorind div15" value="16"> </div>
+                <div class="sectorind div16" value="5"> </div>
+                <div class="sectorind div17" value="11"> </div>
+                <div class="sectorind div18" value="5"> </div>
+                <div class="sectorind div19" value="13"> </div>
+            </div>
+            <div class="sectorstatusbg">
+            </div>
         </div>
     </div>
 </body>
